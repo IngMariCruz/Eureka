@@ -1,10 +1,14 @@
-package mcg.Usuario.entity;
+package com.mcg.commonsService.usuario.models.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
-@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity (name = "alumno")
 @Table
 public class Alumno {
     @Id
@@ -14,24 +18,13 @@ public class Alumno {
     private String apellido;
     private String email;
 
-    @Column(name= "create_at")
+    @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
     @PrePersist
-    private void prePersiste(){
+    private void prePersist() {
         this.createAt = new Date();
-    }
-
-    public Alumno(Long id, String nombre, String apellido, String email, Date createAt) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.createAt = createAt;
-    }
-
-    public Alumno() {
     }
 
     public Long getId() {
@@ -83,5 +76,18 @@ public class Alumno {
                 ", email='" + email + '\'' +
                 ", createAt=" + createAt +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+        if(!(obj instanceof Alumno)){
+            return false;
+        }
+        Alumno a = (Alumno) obj;
+        return this.id != null && this.id.equals(a.getId());
+
     }
 }

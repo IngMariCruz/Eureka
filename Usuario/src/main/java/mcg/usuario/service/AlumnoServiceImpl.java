@@ -1,8 +1,8 @@
-package mcg.Usuario.service;
+package mcg.usuario.service;
 
 import jakarta.transaction.Transactional;
-import mcg.Usuario.entity.Alumno;
-import mcg.Usuario.repository.AlumnoRepository;
+import com.mcg.commonsService.usuario.models.entity.Alumno;
+import mcg.usuario.repository.AlumnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

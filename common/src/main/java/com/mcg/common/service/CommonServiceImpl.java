@@ -23,6 +23,7 @@ public class CommonServiceImpl<E, R extends CrudRepository<E, Long>> implements 
     }
 
     @Override
+    @Transactional
     public E save(E entity) {
         return dao.save(entity);
     }

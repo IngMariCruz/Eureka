@@ -1,6 +1,6 @@
-package mcg.Usuario.repository;
+package mcg.usuario.repository;
 
-import mcg.Usuario.entity.Alumno;
+import com.mcg.commonsService.usuario.models.entity.Alumno;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AlumnoRepository extends CrudRepository<Alumno, Long> {

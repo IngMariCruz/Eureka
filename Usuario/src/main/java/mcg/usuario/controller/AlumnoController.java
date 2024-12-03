@@ -1,8 +1,8 @@
-package mcg.Usuario.controller;
+package mcg.usuario.controller;
 
-import mcg.Usuario.entity.Alumno;
-import mcg.Usuario.service.AlumnoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mcg.common.controller.CommonController;
+import com.mcg.commonsService.usuario.models.entity.Alumno;
+import mcg.usuario.service.AlumnoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,9 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-public class AlumnoController {
-    @Autowired
-    AlumnoService service;
+public class AlumnoController extends CommonController<Alumno, AlumnoService> {
 
-    @Value("${config.balanceador.test")
+    @Value("${config.balanceador.test}")
     private String balanceadorTest;
 
     @GetMapping("/balanceador-test")
@@ -29,29 +27,18 @@ public class AlumnoController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping
-    public ResponseEntity<?> listarAlumno(){
-        return ResponseEntity.ok().body(service.findAll());
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<?> ver(@PathVariable Long id){
-        Optional <Alumno> ob = service.findById(id);
-
+    @GetMapping("buscar/{id}")
+    public ResponseEntity<?> buscar(@PathVariable Long id){
+        Optional<Alumno> ob = service.findById(id);
         if(ob.isEmpty()){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok().body(ob.get());
     }
 
-    @PostMapping
-    public ResponseEntity<?> crear(@RequestBody Alumno alumno){
-        Alumno alumnoDb = service.save(alumno);
-        return ResponseEntity.status(HttpStatus.CREATED).body(alumno.getCreateAt());
-    }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> editar(@RequestBody Alumno alumno, Long id){
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar(@RequestBody Alumno alumno, @PathVariable Long id){
 
         Optional<Alumno> ob = service.findById(id);
         if(ob.isEmpty()){
@@ -64,4 +51,6 @@ public class AlumnoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(alumnoBd));
     }
+
+    
 }
